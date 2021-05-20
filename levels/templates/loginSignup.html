@@ -1,0 +1,163 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!---*************welcome this is my simple empty strap by John Niro Yumang ******************* -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+	<title>Quizoo Login/Signup</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+		<!---- Font awesom link local ----->
+<style type="text/css">
+	#alertmodel{
+		display: none;
+	}
+	body {background-color:#eee;}
+.container-fluid {padding:50px;}
+.container{background-color:white;padding:50px;   }
+#title{font-family: 'Lobster', cursive;;}
+</style>
+	</head>
+	<body>
+	<div class="container-fluid">
+		<div class="row ml-5 mr-5 mt-0" id="alertmodel">
+			<div class="col">
+			<div class="alert alert-warning alert-dismissible fade show" role="alert" id="message">
+				  You should check in on some of those fields below.
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+			</div>
+		</div>
+		{% if error %}
+		<div class="alert alert-warning ml-5 mr-5" role="alert">
+			{{error}}
+		  </div>
+		{% endif %}
+		<div class="container">
+			<h2 class="text-center" id="title">Quizoo</h2>
+ 			<hr>
+			<div class="row">
+				<div class="col-md-5">
+ 					<form method="post" id="signupform">
+ 						{% csrf_token %}
+						<fieldset>							
+							<p class="text-uppercase pull-center"> SIGN UP.</p>	
+ 							<div class="form-group">
+								<input type="text" name="username" id="username" class="form-control input-lg" placeholder="username" required>
+							</div>
+
+							<div class="form-group">
+								<input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" required>
+							</div>
+							<div class="form-group">
+								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" required>
+							</div>
+								<div class="form-group">
+								<input type="password" name="password2" id="password2" class="form-control input-lg" placeholder="Password2" required>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div class="form-check">
+									  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="teacher" checked>
+									  <label class="form-check-label" for="exampleRadios1">
+									    Teacher
+									  </label>
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-check">
+									  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="student" checked>
+									  <label class="form-check-label" for="exampleRadios1">
+									    Student
+									  </label>
+									</div>
+								</div>
+							  </div>
+ 							<div>
+ 								<input type="submit" class="btn btn-primary mt-1" value= "Register">
+ 							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<div class="col-md-2">
+					<!-------null------>
+				</div>
+				
+				<div class="col-md-5">
+ 				 		<form action="{% url 'loginapi' %}" method="post" id="loginform">
+ 				 			{% csrf_token %}
+						<fieldset>							
+							<p class="text-uppercase"> Login using your account: </p>	
+ 								
+							<div class="form-group">
+								<input type="text" name="loginusername" id="loginusername" class="form-control input-lg" placeholder="username" required>
+							</div>
+							<div class="form-group">
+								<input type="password" name="loginpassword" id="loginpassword" class="form-control input-lg" placeholder="Password" required>
+							</div>
+							<div class="row mb-2">
+								<div class="col">
+									Forgot Password?<a href="{% url 'reset_password' %}">Click Here</a> 
+								</div>
+							</div>
+							<div>
+								<input type="submit" class="btn btn-primary" value="Sign In">
+							</div>
+ 						</fieldset>
+				</form>	
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(document).on("submit", "#signupform", function (e) {
+		e.preventDefault();
+   var pass1 = document.getElementById("password").value;
+   var pass2 = document.getElementById("password2").value;
+   var username = document.getElementById("username").value;
+   var email = document.getElementById("email").value;
+   var type = document.querySelector('input[name="exampleRadios"]:checked').value;
+   if (pass1!=pass2){
+   	$("#message").html("Passwords Does Not Match ! Try Again<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+   	var model =$("#alertmodel").show(); 
+   }
+   var serializedData = $(this).serialize();
+$.ajax({
+            type: 'POST',
+            url: "{% url 'signupapi' %}",
+            data: serializedData,
+            success: function (response) {
+            	if(response.is_taken){
+            	$("#message").html("User with The Username Already Exists! Try Loggin In<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+            		var model =$("#alertmodel").show();
+            	}
+             	if(response.subtype){
+            	$("#message").html("The Username You are Trying is Already Taken! Try Again<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+            		var model =$("#alertmodel").show(); 		
+             	}
+             	if(response.sucess){
+            	$("#message").html("User Created Successfully! Login In<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+            		var model =$("#alertmodel").show(); 		
+             	}
+            },
+        })
+
+    });
+ 
+</script>
+	</body>
+</html>
